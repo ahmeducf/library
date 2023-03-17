@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="main.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/54c71c6c1f.js"
+      crossorigin="anonymous"
+    ></script>
+    <title>Library</title>
+  </head>
+  <body>
+    <div class="sidebar">
+      <header>
+        <h1 class="logo-text">library</h1>
+      </header>
+
+      <form action="#">
+        <fieldset>
+          <legend>Book Details</legend>
+
+          <div class="input-text">
+            <input type="text" name="title" id="title" />
+            <label for="title">Book Title</label>
+          </div>
+
+          <div class="input-text">
+            <input type="text" name="author" id="author" />
+            <label for="author">Book Author</label>
+          </div>
+
+          <div class="input-number">
+            <input type="number" name="pages" id="pages" />
+            <label for="pages">Number of Pages</label>
+          </div>
+
+          <div class="input-check-status">
+            <input type="checkbox" name="status" id="status" />
+            <label for="status">I have already read this book!</label>
+          </div>
+
+          <button type="submit">Add New Book</button>
+        </fieldset>
+      </form>
+
+      <footer>
+        <p>
+          Copyright ©
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+          Ahmed Salah
+        </p>
+        <a href="https://github.com/ahmeducf" target="_blank">
+          <i class="fab fa-github"></i>
+        </a>
+      </footer>
+    </div>
+
+    <main>
+      <div class="summary">
+        <div class="summary-item">
+          <div>Total Books</div>
+          <div>0</div>
+        </div>
+
+        <div class="summary-item">
+          <div>Read Books</div>
+          <div>0</div>
+        </div>
+
+        <div class="summary-item">
+          <div>Unread Books</div>
+          <div>0</div>
+        </div>
+
+        <button type="button">Delete All Books</button>
+      </div>
+
+      <table class="books-list">
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Pages</th>
+          <th>Status</th>
+          <th>Remove</th>
+        </tr>
+
+        <tr>
+          <td>title1</td>
+          <td>author1</td>
+          <td>22</td>
+          <td><input type="checkbox" name="status" id="status" checked /></td>
+          <td><i class="fa-solid fa-trash-can"></i></td>
+        </tr>
+        <tr>
+          <td>title2</td>
+          <td>author2</td>
+          <td>333</td>
+          <td><input type="checkbox" name="status" id="status" /></td>
+          <td><i class="fa-solid fa-trash-can"></i></td>
+        </tr>
+      </table>
+    </main>
+  </body>
+</html>
