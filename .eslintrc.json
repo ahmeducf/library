@@ -1,0 +1,24 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["airbnb-base", "prettier"],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest"
+  },
+  "rules": {
+    "no-plusplus": ["warn", { "allowForLoopAfterthoughts": true }],
+
+    // special prettier
+    "curly": ["error", "all"],
+    "allowParens": "off",
+    "no-confusing-arrow": ["error", { "allowParens": false }],
+    "quotes": [
+      "warn",
+      "single",
+      { "avoidEscape": true, "allowTemplateLiterals": false }
+    ]
+  }
+}
