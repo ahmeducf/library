@@ -8,16 +8,16 @@
 
 :root {
   --white: #fffbfb;
-  --cream: #E9C1AF;
-  --blue: #1F3E59;
-  --dark-blue: #1A3246;
+  --cream: #e9c1af;
+  --blue: #1f3e59;
+  --dark-blue: #1a3246;
   --green: #478647;
   --dark-green: #337433;
-  --red: #D05050;
-  --dark-red: #BE3E3E;
+  --red: #d05050;
+  --dark-red: #be3e3e;
 
   --border-radius: 8px;
-  
+
   --spacing-xs: 5px;
   --spacing-sm: 10px;
   --spacing-md: 15px;
@@ -29,10 +29,13 @@
 
 html {
   box-sizing: border-box;
-  font-family: 'Poppins', system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: 'Poppins', system-ui, 'Segoe UI', Helvetica, Arial, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 }
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
