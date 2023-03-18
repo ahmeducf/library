@@ -4,7 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="images/library-favicon.png" type="image/x-icon">
+    <link
+      rel="shortcut icon"
+      href="images/library-favicon.png"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="style.css" />
     <script src="main.js" defer></script>
     <script
@@ -14,6 +18,52 @@
     <title>Library</title>
   </head>
   <body>
+    <main>
+      <div class="summary">
+        <div class="summary-item">
+          <div>Total Books</div>
+          <div>0</div>
+        </div>
+
+        <div class="summary-item">
+          <div>Read Books</div>
+          <div>0</div>
+        </div>
+
+        <div class="summary-item">
+          <div>Unread Books</div>
+          <div>0</div>
+        </div>
+
+        <button type="button">Delete All Books</button>
+      </div>
+
+      <table class="books-list">
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Pages</th>
+          <th>Status</th>
+          <th>Remove</th>
+        </tr>
+
+        <tr>
+          <td>title1</td>
+          <td>author1</td>
+          <td>22</td>
+          <td><input type="checkbox" name="status" id="status" checked /></td>
+          <td><i class="fa-solid fa-trash-can"></i></td>
+        </tr>
+        <tr>
+          <td>title2</td>
+          <td>author2</td>
+          <td>333</td>
+          <td><input type="checkbox" name="status" id="status" /></td>
+          <td><i class="fa-solid fa-trash-can"></i></td>
+        </tr>
+      </table>
+    </main>
+
     <div class="sidebar">
       <header>
         <h1 class="logo-text">library</h1>
@@ -60,51 +110,5 @@
         </a>
       </footer>
     </div>
-
-    <main>
-      <div class="summary">
-        <div class="summary-item">
-          <div>Total Books</div>
-          <div>0</div>
-        </div>
-
-        <div class="summary-item">
-          <div>Read Books</div>
-          <div>0</div>
-        </div>
-
-        <div class="summary-item">
-          <div>Unread Books</div>
-          <div>0</div>
-        </div>
-
-        <button type="button">Delete All Books</button>
-      </div>
-
-      <table class="books-list">
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Pages</th>
-          <th>Status</th>
-          <th>Remove</th>
-        </tr>
-
-        <tr>
-          <td>title1</td>
-          <td>author1</td>
-          <td>22</td>
-          <td><input type="checkbox" name="status" id="status" checked /></td>
-          <td><i class="fa-solid fa-trash-can"></i></td>
-        </tr>
-        <tr>
-          <td>title2</td>
-          <td>author2</td>
-          <td>333</td>
-          <td><input type="checkbox" name="status" id="status" /></td>
-          <td><i class="fa-solid fa-trash-can"></i></td>
-        </tr>
-      </table>
-    </main>
   </body>
 </html>
