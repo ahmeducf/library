@@ -40,3 +40,24 @@ html {
   padding: 0;
   margin: 0;
 }
+
+body {
+  background-color: var(--white);
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+/* Main Section */
+main {
+  background-color: var(--white);
+  grid-column: 2 / -1;
+  grid-row: 1 / -1;
+}
+
+/* Sidebar Section */
+.sidebar {
+  background-color: var(--cream);
+  grid-column: 1 / 2;
+  grid-row: 1 / -1;
+}
