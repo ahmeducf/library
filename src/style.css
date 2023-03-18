@@ -3,7 +3,7 @@
 /* Logo Font */
 @font-face {
   font-family: 'MarcellusSC-Regular';
-  src: url('../fonts/MarcellusSC-Regular.ttf');
+  src: url('fonts/MarcellusSC-Regular.ttf');
 }
 
 html {
