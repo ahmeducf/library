@@ -81,6 +81,18 @@ main {
   flex: 1;
 }
 
+.sidebar form fieldset {
+  border: 0;
+}
+.sidebar form legend {
+  position: absolute;
+  left: -10000px;
+  top: -10000px;
+  overflow: hidden;
+  width: 0;
+  height: 0;
+}
+
 /* Sidebar Footer Section */
 footer {
   display: flex;
