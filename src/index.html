@@ -74,17 +74,20 @@
           <legend>Book Details</legend>
 
           <div class="input-text">
-            <input type="text" name="title" id="title" />
+            <input type="text" name="title" id="title" autocomplete="off" required />
+            <span class="placeholder">What is the title of the book? *</span>
             <label for="title">Book Title</label>
           </div>
 
           <div class="input-text">
-            <input type="text" name="author" id="author" />
+            <input type="text" name="author" id="author" autocomplete="off" required />
+            <span class="placeholder">Who is the author of the book? *</span>
             <label for="author">Book Author</label>
           </div>
 
           <div class="input-number">
-            <input type="number" name="pages" id="pages" />
+            <input type="number" name="pages" id="pages" required min="1" />
+            <span class="placeholder">How many pages are in the book? *</span>
             <label for="pages">Number of Pages</label>
           </div>
 

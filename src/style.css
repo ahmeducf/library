@@ -16,7 +16,7 @@
   --red: #d05050;
   --dark-red: #be3e3e;
 
-  --border-radius: 8px;
+  --border-radius: 2px;
 
   --spacing-xs: 5px;
   --spacing-sm: 10px;
@@ -39,6 +39,13 @@ html {
   box-sizing: inherit;
   padding: 0;
   margin: 0;
+}
+
+input,
+input:focus button,
+button:focus {
+  appearance: none;
+  outline: none;
 }
 
 body {
@@ -79,13 +86,56 @@ main {
 /* Sidebar Form Section */
 .sidebar form {
   flex: 1;
+  width: 100%;
 }
 
 .sidebar form fieldset {
   border: 0;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--spacing-xl);
 }
 
-.sidebar form div > label:not([for="read"]),
+.sidebar form input[type='text'],
+.sidebar form input[type='number'] {
+  width: 100%;
+  padding: var(--spacing-md) 0 var(--spacing-xs) 0;
+  font-size: 1.2rem;
+  color: var(--blue);
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1.5px dashed var(--blue);
+  transition: all 0.3s;
+}
+
+input[type='text']:focus,
+input[type='number']:focus {
+  border-bottom-color: var(--white);
+  position: relative;
+}
+
+form fieldset div {
+  position: relative;
+}
+
+form fieldset .placeholder {
+  position: absolute;
+  color: var(--blue);
+  opacity: 0.9;
+  top: 10px;
+  left: 0px;
+  width: 100%;
+  transition: all 0.3s;
+  transform-origin: 0% 0%;
+  pointer-events: none;
+}
+
+.sidebar form input:valid + .placeholder,
+.sidebar form input:focus + .placeholder {
+  transform: scale(0.8) translateY(-24px);
+}
+
+.sidebar form div > label:not([for='read']),
 .sidebar form legend {
   position: absolute;
   left: -10000px;
@@ -93,6 +143,55 @@ main {
   overflow: hidden;
   width: 0;
   height: 0;
+}
+
+input[type='checkbox'] {
+  position: relative;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--blue);
+  vertical-align: -2px;
+  color: var(--white);
+}
+
+input[type='checkbox']::before {
+  content: '✔';
+  position: absolute;
+  font-size: 16px;
+  right: -0.1px;
+  top: -0.1em;
+  visibility: hidden;
+}
+
+input[type='checkbox']:checked {
+  background-color: var(--blue);
+}
+
+input[type='checkbox']:checked::before {
+  visibility: visible;
+}
+
+form fieldset input[type='checkbox'] + label {
+  color: var(--blue);
+  width: calc(100% - 24px);
+  display: inline-block;
+}
+
+form fieldset button[type='submit'] {
+  padding: var(--spacing-lg) 0;
+  border: 1px solid var(--blue);
+  border-radius: 2px;
+  background-color: var(--blue);
+  color: var(--white);
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+form fieldset button[type='submit']:hover {
+  cursor: pointer;
+  border-color: var(--dark-blue);
+  background-color: var(--dark-blue);
+  transition: 0.3s;
 }
 
 /* Sidebar Footer Section */
