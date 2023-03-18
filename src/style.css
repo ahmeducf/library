@@ -84,6 +84,8 @@ main {
 .sidebar form fieldset {
   border: 0;
 }
+
+.sidebar form div > label:not([for="read"])
 .sidebar form legend {
   position: absolute;
   left: -10000px;
