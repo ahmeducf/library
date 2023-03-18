@@ -6,6 +6,27 @@
   src: url('fonts/MarcellusSC-Regular.ttf');
 }
 
+:root {
+  --white: #fffbfb;
+  --cream: #E9C1AF;
+  --blue: #1F3E59;
+  --dark-blue: #1A3246;
+  --green: #478647;
+  --dark-green: #337433;
+  --red: #D05050;
+  --dark-red: #BE3E3E;
+
+  --border-radius: 8px;
+  
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 40px;
+
+  --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
 html {
   box-sizing: border-box;
   font-family: 'Poppins', system-ui, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
