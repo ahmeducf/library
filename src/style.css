@@ -141,9 +141,11 @@ main .books-list tbody td {
 main .books-list tbody tr td:last-of-type i {
   color: var(--red);
   font-size: 1.4rem;
+  transition: all 0.3s;
 }
 main .books-list tbody tr td:last-of-type i:hover {
   cursor: pointer;
+  color: var(--dark-red);
 }
 
 main .books-list tbody tr td:nth-child(4) i {
@@ -155,9 +157,18 @@ main .books-list tbody tr td:nth-child(4) i:hover {
 
 tbody tr td:nth-child(4) i.book-read {
   color: var(--green);
+  transition: all 0.3s;
 }
+tbody tr td:nth-child(4) i.book-read:hover {
+  color: var(--dark-green);
+}
+
 tbody tr td:nth-child(4) i.book-not-read {
   color: var(--red);
+  transition: all 0.3s;
+}
+tbody tr td:nth-child(4) i.book-not-read:hover {
+  color: var(--dark-red);
 }
 
 /* Sidebar Section */
