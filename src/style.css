@@ -60,8 +60,47 @@ main {
   background-color: var(--white);
   grid-column: 2 / -1;
   grid-row: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--spacing-xl);
+  align-items: center;
+  padding-top: var(--spacing-xl);
+  color: var(--blue);
 }
 
+/* Main Summary Section */
+main .summary {
+  display: flex;
+  gap: var(--spacing-lg);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+main .summary .summary-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2px dashed var(--blue);
+  border-radius: var(--border-radius);
+  padding: 0 var(--spacing-sm);
+}
+
+main .summary button {
+  padding: 0 var(--spacing-md);
+  border: 1px solid var(--red);
+  border-radius: var(--border-radius);
+  background-color: var(--red);
+  color: var(--white);
+  font-size: 1.2rem;
+  transition: 0.3s;
+}
+
+main .summary button:hover {
+  cursor: pointer;
+  border-color: var(--dark-red);
+  background-color: var(--dark-red);
+  transition: 0.3s;
+}
 /* Sidebar Section */
 .sidebar {
   background-color: var(--cream);
