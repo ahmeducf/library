@@ -101,6 +101,65 @@ main .summary button:hover {
   background-color: var(--dark-red);
   transition: 0.3s;
 }
+
+/* Main Books List Section */
+main .books-list {
+  border-collapse: collapse;
+  width: 75%;
+  text-align: center;
+}
+
+main .books-list thead tr {
+  background-color: var(--blue);
+  color: var(--white);
+}
+
+main .books-list thead th,
+main .books-list tbody td {
+  word-wrap: break-word;
+  max-width: 200px;
+}
+
+main .books-list thead th {
+  font-size: 1.2rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: var(--spacing-xs);
+}
+
+main .books-list tbody tr {
+  border-bottom: 1.5px dashed var(--blue);
+}
+
+main .books-list tbody td {
+  padding: var(--spacing-sm);
+  font-size: 1rem;
+  height: 72px;
+}
+
+main .books-list tbody tr td:last-of-type i {
+  color: var(--red);
+  font-size: 1.4rem;
+}
+main .books-list tbody tr td:last-of-type i:hover {
+  cursor: pointer;
+}
+
+main .books-list tbody tr td:nth-child(4) i {
+  font-size: 1.8rem;
+}
+main .books-list tbody tr td:nth-child(4) i:hover {
+  cursor: pointer;
+}
+
+tbody tr td:nth-child(4) i.book-read {
+  color: var(--green);
+}
+tbody tr td:nth-child(4) i.book-not-read {
+  color: var(--red);
+}
+
 /* Sidebar Section */
 .sidebar {
   background-color: var(--cream);

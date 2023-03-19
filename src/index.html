@@ -39,28 +39,32 @@
       </div>
 
       <table class="books-list">
-        <tr>
-          <th>Title</th>
-          <th>Author</th>
-          <th>Pages</th>
-          <th>Status</th>
-          <th>Remove</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Status</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
 
-        <tr>
-          <td>title1</td>
-          <td>author1</td>
-          <td>22</td>
-          <td><input type="checkbox" name="status" id="status" checked /></td>
-          <td><i class="fa-solid fa-trash-can"></i></td>
-        </tr>
-        <tr>
-          <td>title2</td>
-          <td>author2</td>
-          <td>333</td>
-          <td><input type="checkbox" name="status" id="status" /></td>
-          <td><i class="fa-solid fa-trash-can"></i></td>
-        </tr>
+        <tbody>
+          <tr>
+            <td>title1</td>
+            <td>author1</td>
+            <td>22</td>
+            <td><i class="fa-solid fa-check book-read"></i></td>
+            <td><i class="fa-solid fa-trash-can"></i></td>
+          </tr>
+          <tr>
+            <td>title2</td>
+            <td>author2</td>
+            <td>333</td>
+            <td><i class="fa-solid fa-xmark book-not-read"></i></td>
+            <td><i class="fa-solid fa-trash-can"></i></td>
+          </tr>
+        </tbody>
       </table>
     </main>
 
@@ -74,13 +78,25 @@
           <legend>Book Details</legend>
 
           <div class="input-text">
-            <input type="text" name="title" id="title" autocomplete="off" required />
+            <input
+              type="text"
+              name="title"
+              id="title"
+              autocomplete="off"
+              required
+            />
             <span class="placeholder">What is the title of the book? *</span>
             <label for="title">Book Title</label>
           </div>
 
           <div class="input-text">
-            <input type="text" name="author" id="author" autocomplete="off" required />
+            <input
+              type="text"
+              name="author"
+              id="author"
+              autocomplete="off"
+              required
+            />
             <span class="placeholder">Who is the author of the book? *</span>
             <label for="author">Book Author</label>
           </div>
