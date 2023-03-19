@@ -108,8 +108,8 @@ main {
   transition: all 0.3s;
 }
 
-input[type='text']:focus,
-input[type='number']:focus {
+form fieldset input[type='text']:focus,
+form fieldset input[type='number']:focus {
   border-bottom-color: var(--white);
   position: relative;
 }
@@ -131,7 +131,8 @@ form fieldset .placeholder {
 }
 
 .sidebar form input:valid + .placeholder,
-.sidebar form input:focus + .placeholder {
+.sidebar form input:focus + .placeholder,
+.sidebar form input[type='number']:out-of-range + .placeholder {
   transform: scale(0.8) translateY(-24px);
 }
 
