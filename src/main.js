@@ -1,4 +1,8 @@
-const library = [];
+// Constructors
+function Library() {
+  this.libraryBooks = [];
+  this.readBooksNumber = 0;
+}
 
 function Book(title, author, pages, isRead) {
   this.title = title;
@@ -7,6 +11,7 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
+// Library object and stub book objects
 const computerSystemsBook = new Book(
   'Computer Systems: A programmer perspective',
   'Randal Bryant',
@@ -15,4 +20,8 @@ const computerSystemsBook = new Book(
 );
 const ThePrinceBook = new Book('The Prince', 'Niccolo Machiavelli', 250, false);
 
-library.push(...[computerSystemsBook, ThePrinceBook]);
+const myLibrary = new Library();
+
+myLibrary.libraryBooks.push(...[computerSystemsBook, ThePrinceBook]);
+myLibrary.readBooksNumber += computerSystemsBook.isRead;
+myLibrary.readBooksNumber += ThePrinceBook.isRead;
