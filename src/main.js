@@ -166,3 +166,28 @@ addNewBookButton.addEventListener('click', (e) => {
 });
 
 deleteAllBooksButton.addEventListener('click', deleteAllBooks);
+
+document.addEventListener('click', (e) => {
+  const { target } = e;
+  const bookIndex = target.parentNode.parentNode.rowIndex - 1;
+
+  if (target.classList.contains('fa-trash-can')) {
+    myLibrary.libraryBooks.splice(bookIndex, 1);
+    target.parentNode.parentNode.remove();
+    updateLibrarySummary();
+  } else if (target.classList.contains('fa-check')) {
+    myLibrary.libraryBooks[bookIndex].isRead = false;
+    myLibrary.readBooksNumber -= 1;
+
+    target.classList.remove('fa-check', 'book-read');
+    target.classList.add('fa-xmark', 'book-not-read');
+    updateLibrarySummary();
+  } else if (target.classList.contains('fa-xmark')) {
+    myLibrary.libraryBooks[bookIndex].isRead = true;
+    myLibrary.readBooksNumber += 1;
+
+    target.classList.remove('fa-xmark', 'book-not-read');
+    target.classList.add('fa-check', 'book-read');
+    updateLibrarySummary();
+  }
+});
