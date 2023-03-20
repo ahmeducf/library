@@ -35,12 +35,6 @@ myLibrary.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
 // DOM
 const addNewBookButton = document.querySelector('form button[type="submit"]');
 const deleteAllBooksButton = document.querySelector('main .summary button');
-const removeBookButton = document.querySelectorAll(
-  'main .books-list tbody tr td:last-of-type i'
-);
-const readStatusButton = document.querySelectorAll(
-  'main .books-list tbody tr td:nth-child(4) i'
-);
 
 // Functions
 function appendBookRowToBooksTable(title, author, pages, isRead) {
@@ -169,15 +163,3 @@ addNewBookButton.addEventListener('click', (e) => {
 });
 
 deleteAllBooksButton.addEventListener('click', deleteAllBooks);
-
-[...removeBookButton].forEach((book) => {
-  book.addEventListener('click', (e) => {
-    console.dir(e);
-  });
-});
-
-[...readStatusButton].forEach((button) => {
-  button.addEventListener('click', (e) => {
-    console.dir(e);
-  });
-});
