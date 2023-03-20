@@ -18,21 +18,6 @@ Library.prototype.addBook = (title, author, pages, isRead) => {
   }
 };
 
-// Functions
-function displayLibraryBooks() {}
-
-function updateLibrarySummary() {}
-
-// Library object and stub book objects
-const myLibrary = new Library();
-myLibrary.push(
-  'Computer Systems: A programmer perspective',
-  'Randal Bryant',
-  1500,
-  true
-);
-myLibrary.push('The Prince', 'Niccolo Machiavelli', 250, false);
-
 // DOM
 const addNewBookButton = document.querySelector('form button[type="submit"]');
 const deleteAllBooksButton = document.querySelector('main .summary button');
@@ -42,6 +27,11 @@ const removeBookButton = document.querySelectorAll(
 const readStatusButton = document.querySelectorAll(
   'main .books-list tbody tr td:nth-child(4) i'
 );
+
+// Functions
+function displayLibraryBooks() {}
+
+function updateLibrarySummary() {}
 
 // Event Listeners
 window.addEventListener('load', () => {
@@ -68,3 +58,13 @@ deleteAllBooksButton.addEventListener('click', (e) => {
     console.dir(e);
   });
 });
+
+// Library object and stub book objects
+const myLibrary = new Library();
+myLibrary.addBook(
+  'Computer Systems: A programmer perspective',
+  'Randal Bryant',
+  1500,
+  true
+);
+myLibrary.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
