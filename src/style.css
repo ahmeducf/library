@@ -120,6 +120,16 @@ main .books-list tbody td {
   max-width: 200px;
 }
 
+main .books-list thead th:first-of-type,
+main .books-list tbody td:first-of-type {
+  min-width: 200px;
+}
+
+main .books-list thead th:nth-child(3),
+main .books-list tbody td:nth-child(3) {
+  min-width: 100px;
+}
+
 main .books-list thead th {
   font-size: 1.2rem;
   font-weight: 500;
