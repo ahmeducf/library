@@ -18,6 +18,10 @@ Library.prototype.addBook = function addBook(title, author, pages, isRead) {
   }
 };
 
+Library.prototype.removeAll = function removeAll() {
+  this.libraryBooks.splice(0);
+};
+
 // Library object and stub book objects
 const myLibrary = new Library();
 myLibrary.addBook(
@@ -117,6 +121,13 @@ function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
   }
 }
 
+function deleteAllBooks() {
+  const allBooks = document.querySelectorAll('main .books-list tbody tr');
+
+  myLibrary.removeAll();
+  [...allBooks].forEach((book) => book.remove());
+}
+
 // Event Listeners
 window.addEventListener('load', () => {
   displayLibraryBooks();
@@ -157,9 +168,7 @@ addNewBookButton.addEventListener('click', (e) => {
   }
 });
 
-deleteAllBooksButton.addEventListener('click', (e) => {
-  console.dir(e);
-});
+deleteAllBooksButton.addEventListener('click', deleteAllBooks);
 
 [...removeBookButton].forEach((book) => {
   book.addEventListener('click', (e) => {
