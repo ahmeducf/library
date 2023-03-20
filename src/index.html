@@ -78,6 +78,7 @@
           <legend>Book Details</legend>
 
           <div class="input-text">
+            <label for="title">Book Title</label>
             <input
               type="text"
               name="title"
@@ -86,10 +87,11 @@
               required
             />
             <span class="placeholder">What is the title of the book? *</span>
-            <label for="title">Book Title</label>
+            <span class="validation-error">This field is required.</span>
           </div>
 
           <div class="input-text">
+            <label for="author">Book Author</label>
             <input
               type="text"
               name="author"
@@ -98,13 +100,14 @@
               required
             />
             <span class="placeholder">Who is the author of the book? *</span>
-            <label for="author">Book Author</label>
+            <span class="validation-error">This field is required.</span>
           </div>
 
           <div class="input-number">
+            <label for="pages">Number of Pages</label>
             <input type="number" name="pages" id="pages" required min="1" />
             <span class="placeholder">How many pages are in the book? *</span>
-            <label for="pages">Number of Pages</label>
+            <span class="validation-error">This field is required.</span>
           </div>
 
           <div class="input-check-status">

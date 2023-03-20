@@ -92,6 +92,31 @@ function updateLibrarySummary() {
     myLibrary.libraryBooks.length - myLibrary.readBooksNumber;
 }
 
+function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
+  const errorTextSpan = document.querySelectorAll('form span.validation-error');
+
+  if (bookTitle === '') {
+    errorTextSpan[0].style.visibility = 'visible';
+  } else {
+    errorTextSpan[0].style.visibility = 'hidden';
+  }
+
+  if (bookAuthor === '') {
+    errorTextSpan[1].style.visibility = 'visible';
+  } else {
+    errorTextSpan[1].style.visibility = 'hidden';
+  }
+
+  if (bookPages === '') {
+    errorTextSpan[2].style.visibility = 'visible';
+  } else if (bookPages < 1) {
+    errorTextSpan[2].innerText = 'Please enter a number bigger than 0.';
+    errorTextSpan[2].style.visibility = 'visible';
+  } else {
+    errorTextSpan[2].style.visibility = 'hidden';
+  }
+}
+
 // Event Listeners
 window.addEventListener('load', () => {
   displayLibraryBooks();
@@ -99,7 +124,37 @@ window.addEventListener('load', () => {
 });
 
 addNewBookButton.addEventListener('click', (e) => {
-  console.dir(e);
+  e.preventDefault();
+
+  const form = document.querySelector('form');
+  const bookTitle = document.querySelector('form input#title').value;
+  const bookAuthor = document.querySelector('form input#author').value;
+  const bookPages = document.querySelector('form input#pages').value;
+  const bookIsRead = document.querySelector('form input#read').checked;
+
+  const isValidForm = function isValidForm() {
+    return (
+      bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookPages > 0
+    );
+  };
+
+  toggleValidationMessages(bookTitle, bookAuthor, bookPages);
+
+  if (isValidForm()) {
+    myLibrary.addBook(
+      bookTitle,
+      bookAuthor,
+      parseInt(bookPages, 10),
+      bookIsRead
+    );
+    appendBookRowToBooksTable(
+      bookTitle,
+      bookAuthor,
+      parseInt(bookPages, 10),
+      bookIsRead
+    );
+    form.reset();
+  }
 });
 
 deleteAllBooksButton.addEventListener('click', (e) => {
