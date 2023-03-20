@@ -122,6 +122,8 @@ function deleteAllBooks() {
   myLibrary.readBooksNumber = 0;
 
   [...allBooks].forEach((book) => book.remove());
+
+  updateLibrarySummary();
 }
 
 // Event Listeners
