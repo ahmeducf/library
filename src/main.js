@@ -119,7 +119,11 @@ function deleteAllBooks() {
   const allBooks = document.querySelectorAll('main .books-list tbody tr');
 
   myLibrary.removeAll();
+  myLibrary.readBooksNumber = 0;
+
   [...allBooks].forEach((book) => book.remove());
+
+  updateLibrarySummary()
 }
 
 // Event Listeners
