@@ -75,7 +75,22 @@ function displayLibraryBooks() {
   });
 }
 
-function updateLibrarySummary() {}
+function updateLibrarySummary() {
+  const totalBooksNumberDiv = document.querySelector(
+    '.summary-item:nth-of-type(1) div:last-child'
+  );
+  const readBooksNumberDiv = document.querySelector(
+    '.summary-item:nth-of-type(2) div:last-child'
+  );
+  const unreadBooksNumberDiv = document.querySelector(
+    '.summary-item:nth-of-type(3) div:last-child'
+  );
+
+  totalBooksNumberDiv.innerText = myLibrary.libraryBooks.length;
+  readBooksNumberDiv.innerText = myLibrary.readBooksNumber;
+  unreadBooksNumberDiv.innerText =
+    myLibrary.libraryBooks.length - myLibrary.readBooksNumber;
+}
 
 // Event Listeners
 window.addEventListener('load', () => {
