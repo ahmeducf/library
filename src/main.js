@@ -172,7 +172,11 @@ document.addEventListener('click', (e) => {
   const bookIndex = target.parentNode.parentNode.rowIndex - 1;
 
   if (target.classList.contains('fa-trash-can')) {
+    if (myLibrary.libraryBooks[bookIndex].isRead) {
+      myLibrary.readBooksNumber -= 1;
+    }
     myLibrary.libraryBooks.splice(bookIndex, 1);
+
     target.parentNode.parentNode.remove();
     updateLibrarySummary();
   } else if (target.classList.contains('fa-check')) {
