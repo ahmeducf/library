@@ -1,14 +1,14 @@
 // Constructors
-function Library() {
-  this.libraryBooks = [];
-  this.readBooksNumber = 0;
-}
-
 function Book(title, author, pages, isRead) {
   this.title = title;
   this.author = author;
   this.pages = Number(pages);
   this.isRead = isRead;
+}
+
+function Library() {
+  this.libraryBooks = [];
+  this.readBooksNumber = 0;
 }
 
 Library.prototype.addBook = function addBook(title, author, pages, isRead) {
@@ -20,6 +20,13 @@ Library.prototype.addBook = function addBook(title, author, pages, isRead) {
 
 Library.prototype.removeAll = function removeAll() {
   this.libraryBooks.splice(0);
+};
+
+Library.prototype.removeBook = function (bookIndex) {
+  if (this.libraryBooks[bookIndex].isRead) {
+    this.readBooksNumber -= 1;
+  }
+  this.libraryBooks.splice(bookIndex, 1);
 };
 
 // Library object and stub book objects
@@ -174,10 +181,7 @@ document.addEventListener('click', (e) => {
   const bookIndex = target.parentNode.parentNode.rowIndex - 1;
 
   if (target.classList.contains('fa-trash-can')) {
-    if (myLibrary.libraryBooks[bookIndex].isRead) {
-      myLibrary.readBooksNumber -= 1;
-    }
-    myLibrary.libraryBooks.splice(bookIndex, 1);
+    myLibrary.removeBook(bookIndex);
 
     target.parentNode.parentNode.remove();
     updateLibrarySummary();
