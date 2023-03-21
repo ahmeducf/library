@@ -24,7 +24,7 @@
   --spacing-lg: 20px;
   --spacing-xl: 40px;
 
-  --shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  --shadow: rgba(0, 0, 0, 0.16) 0px 0px 4px;
 }
 
 html {
@@ -107,6 +107,7 @@ main .books-list {
   border-collapse: collapse;
   width: 75%;
   text-align: center;
+  box-shadow: var(--shadow);
 }
 
 main .books-list thead tr {
