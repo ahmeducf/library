@@ -318,7 +318,7 @@ form fieldset button[type='submit']:hover {
 /* Sidebar Form Validation Section */
 form fieldset span.validation-error {
   visibility: hidden;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: var(--red);
 }
 
