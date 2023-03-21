@@ -22,7 +22,7 @@ Library.prototype.removeAll = function removeAll() {
   this.libraryBooks.splice(0);
 };
 
-Library.prototype.removeBook = function (bookIndex) {
+Library.prototype.removeBook = function removeBook(bookIndex) {
   if (this.libraryBooks[bookIndex].isRead) {
     this.readBooksNumber -= 1;
   }
