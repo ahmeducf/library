@@ -213,7 +213,7 @@ tbody tr td:nth-child(4) i.book-not-read:hover {
   border: 0;
   display: flex;
   flex-direction: column;
-  row-gap: var(--spacing-lg);
+  row-gap: 28px;
 }
 
 .sidebar form input[type='text'],
