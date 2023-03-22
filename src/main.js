@@ -29,6 +29,11 @@ Library.prototype.removeBook = function removeBook(bookIndex) {
   this.libraryBooks.splice(bookIndex, 1);
 };
 
+Library.prototype.unreadBook = function unreadBook(bookIndex) {
+  this.libraryBooks[bookIndex].isRead = false;
+  this.readBooksNumber -= 1;
+};
+
 // Library object and stub book objects
 const myLibrary = new Library();
 myLibrary.addBook(
@@ -186,8 +191,7 @@ document.addEventListener('click', (e) => {
     target.parentNode.parentNode.remove();
     updateLibrarySummary();
   } else if (target.classList.contains('fa-check')) {
-    myLibrary.libraryBooks[bookIndex].isRead = false;
-    myLibrary.readBooksNumber -= 1;
+    myLibrary.unreadBook(bookIndex);
 
     target.classList.remove('fa-check', 'book-read');
     target.classList.add('fa-xmark', 'book-not-read');
