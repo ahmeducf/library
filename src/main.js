@@ -6,48 +6,70 @@ function Book(title, author, pages, isRead) {
   this.isRead = isRead;
 }
 
-function Library() {
-  this.libraryBooks = [];
-  this.readBooksNumber = 0;
-}
+const library = (() => {
+  const libraryBooks = [];
+  let readBooksNumber = 0;
 
-Library.prototype.addBook = function addBook(title, author, pages, isRead) {
-  this.libraryBooks.push(new Book(title, author, pages, isRead));
-  if (isRead) {
-    this.readBooksNumber += 1;
-  }
-};
+  const addBook = function addBook(title, author, pages, isRead) {
+    libraryBooks.push(new Book(title, author, pages, isRead));
+    if (isRead) {
+      readBooksNumber += 1;
+    }
+  };
 
-Library.prototype.removeAll = function removeAll() {
-  this.libraryBooks.splice(0);
-};
+  const removeAll = function removeAll() {
+    libraryBooks.splice(0);
+    readBooksNumber = 0;
+  };
 
-Library.prototype.removeBook = function removeBook(bookIndex) {
-  if (this.libraryBooks[bookIndex].isRead) {
-    this.readBooksNumber -= 1;
-  }
-  this.libraryBooks.splice(bookIndex, 1);
-};
+  const removeBook = function removeBook(bookIndex) {
+    if (libraryBooks[bookIndex].isRead) {
+      readBooksNumber -= 1;
+    }
+    libraryBooks.splice(bookIndex, 1);
+  };
 
-Library.prototype.unreadBook = function unreadBook(bookIndex) {
-  this.libraryBooks[bookIndex].isRead = false;
-  this.readBooksNumber -= 1;
-};
+  const unreadBook = function unreadBook(bookIndex) {
+    libraryBooks[bookIndex].isRead = false;
+    readBooksNumber -= 1;
+  };
 
-Library.prototype.readBook = function readBook(bookIndex) {
-  this.libraryBooks[bookIndex].isRead = true;
-  this.readBooksNumber += 1;
-};
+  const readBook = function readBook(bookIndex) {
+    libraryBooks[bookIndex].isRead = true;
+    readBooksNumber += 1;
+  };
 
-// Library object and stub book objects
-const myLibrary = new Library();
-myLibrary.addBook(
+  const getLibraryBooks = function getLibraryBooks() {
+    return libraryBooks;
+  };
+
+  const getBooksNumber = function getBooksNumber() {
+    return libraryBooks.length;
+  };
+
+  const getReadBooksNumber = function getReadBooksNumber() {
+    return readBooksNumber;
+  };
+
+  return {
+    getLibraryBooks,
+    getBooksNumber,
+    getReadBooksNumber,
+    readBook,
+    unreadBook,
+    addBook,
+    removeAll,
+    removeBook,
+  };
+})();
+
+library.addBook(
   'Computer Systems: A programmer perspective',
   'Randal Bryant',
   1500,
   true
 );
-myLibrary.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
+library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
 
 // DOM
 const addNewBookButton = document.querySelector('form button[type="submit"]');
@@ -85,7 +107,7 @@ function appendBookRowToBooksTable(title, author, pages, isRead) {
 }
 
 function displayLibraryBooks() {
-  myLibrary.libraryBooks.forEach((book) => {
+  library.getLibraryBooks().forEach((book) => {
     appendBookRowToBooksTable(book.title, book.author, book.pages, book.isRead);
   });
 }
@@ -101,10 +123,10 @@ function updateLibrarySummary() {
     '.summary-item:nth-of-type(3) div:last-child'
   );
 
-  totalBooksNumberDiv.innerText = myLibrary.libraryBooks.length;
-  readBooksNumberDiv.innerText = myLibrary.readBooksNumber;
+  totalBooksNumberDiv.innerText = library.getBooksNumber();
+  readBooksNumberDiv.innerText = library.getReadBooksNumber();
   unreadBooksNumberDiv.innerText =
-    myLibrary.libraryBooks.length - myLibrary.readBooksNumber;
+    library.getBooksNumber() - library.getReadBooksNumber();
 }
 
 function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
@@ -135,8 +157,7 @@ function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
 function deleteAllBooks() {
   const allBooks = document.querySelectorAll('main .books-list tbody tr');
 
-  myLibrary.removeAll();
-  myLibrary.readBooksNumber = 0;
+  library.removeAll();
 
   [...allBooks].forEach((book) => book.remove());
 
@@ -171,12 +192,7 @@ addNewBookButton.addEventListener('click', (e) => {
   toggleValidationMessages(bookTitle, bookAuthor, bookPages);
 
   if (isValidForm()) {
-    myLibrary.addBook(
-      bookTitle,
-      bookAuthor,
-      parseInt(bookPages, 10),
-      bookIsRead
-    );
+    library.addBook(bookTitle, bookAuthor, parseInt(bookPages, 10), bookIsRead);
     appendBookRowToBooksTable(
       bookTitle,
       bookAuthor,
@@ -195,18 +211,18 @@ document.addEventListener('click', (e) => {
   const bookIndex = target.parentNode.parentNode.rowIndex - 1;
 
   if (target.classList.contains('fa-trash-can')) {
-    myLibrary.removeBook(bookIndex);
+    library.removeBook(bookIndex);
 
     target.parentNode.parentNode.remove();
     updateLibrarySummary();
   } else if (target.classList.contains('fa-check')) {
-    myLibrary.unreadBook(bookIndex);
+    library.unreadBook(bookIndex);
 
     target.classList.remove('fa-check', 'book-read');
     target.classList.add('fa-xmark', 'book-not-read');
     updateLibrarySummary();
   } else if (target.classList.contains('fa-xmark')) {
-    myLibrary.readBook(bookIndex);
+    library.readBook(bookIndex);
 
     target.classList.remove('fa-xmark', 'book-not-read');
     target.classList.add('fa-check', 'book-read');
