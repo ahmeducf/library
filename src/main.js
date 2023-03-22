@@ -34,6 +34,11 @@ Library.prototype.unreadBook = function unreadBook(bookIndex) {
   this.readBooksNumber -= 1;
 };
 
+Library.prototype.readBook = function readBook(bookIndex) {
+  this.libraryBooks[bookIndex].isRead = true;
+  this.readBooksNumber += 1;
+};
+
 // Library object and stub book objects
 const myLibrary = new Library();
 myLibrary.addBook(
@@ -197,8 +202,7 @@ document.addEventListener('click', (e) => {
     target.classList.add('fa-xmark', 'book-not-read');
     updateLibrarySummary();
   } else if (target.classList.contains('fa-xmark')) {
-    myLibrary.libraryBooks[bookIndex].isRead = true;
-    myLibrary.readBooksNumber += 1;
+    myLibrary.readBook(bookIndex);
 
     target.classList.remove('fa-xmark', 'book-not-read');
     target.classList.add('fa-check', 'book-read');
