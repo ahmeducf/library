@@ -124,8 +124,8 @@ function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
 
   if (bookPages === '') {
     errorTextSpan[2].style.visibility = 'visible';
-  } else if (bookPages < 1) {
-    errorTextSpan[2].innerText = 'Please enter a number bigger than 0.';
+  } else if (bookPages < 1 || bookPages > 10000) {
+    errorTextSpan[2].innerText = 'Enter a number between 1 and 10000.';
     errorTextSpan[2].style.visibility = 'visible';
   } else {
     errorTextSpan[2].style.visibility = 'hidden';
@@ -160,7 +160,11 @@ addNewBookButton.addEventListener('click', (e) => {
 
   const isValidForm = function isValidForm() {
     return (
-      bookTitle !== '' && bookAuthor !== '' && bookPages !== '' && bookPages > 0
+      bookTitle !== '' &&
+      bookAuthor !== '' &&
+      bookPages !== '' &&
+      bookPages > 0 &&
+      bookPages <= 10000
     );
   };
 
