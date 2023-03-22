@@ -1,9 +1,18 @@
-// Constructors
-function Book(title, author, pages, isRead) {
-  this.title = title;
-  this.author = author;
-  this.pages = Number(pages);
-  this.isRead = isRead;
+function Book(title, author, pages, status) {
+  const bookTitle = title;
+  const bookAuthor = author;
+  const bookPages = pages;
+  let bookStatus = status;
+
+  const getTitle = () => bookTitle;
+  const getAuthor = () => bookAuthor;
+  const getPagesNumber = () => Number(bookPages);
+  const getReadStatus = () => bookStatus;
+  const setReadStatus = (s) => {
+    bookStatus = s;
+  };
+
+  return { getTitle, getAuthor, getPagesNumber, getReadStatus, setReadStatus };
 }
 
 const library = (() => {
@@ -11,7 +20,7 @@ const library = (() => {
   let readBooksNumber = 0;
 
   const addBook = function addBook(title, author, pages, isRead) {
-    libraryBooks.push(new Book(title, author, pages, isRead));
+    libraryBooks.push(Book(title, author, pages, isRead));
     if (isRead) {
       readBooksNumber += 1;
     }
@@ -23,19 +32,19 @@ const library = (() => {
   };
 
   const removeBook = function removeBook(bookIndex) {
-    if (libraryBooks[bookIndex].isRead) {
+    if (libraryBooks[bookIndex].getReadStatus()) {
       readBooksNumber -= 1;
     }
     libraryBooks.splice(bookIndex, 1);
   };
 
   const unreadBook = function unreadBook(bookIndex) {
-    libraryBooks[bookIndex].isRead = false;
+    libraryBooks[bookIndex].setReadStatus(false);
     readBooksNumber -= 1;
   };
 
   const readBook = function readBook(bookIndex) {
-    libraryBooks[bookIndex].isRead = true;
+    libraryBooks[bookIndex].setReadStatus(true);
     readBooksNumber += 1;
   };
 
@@ -108,7 +117,12 @@ function appendBookRowToBooksTable(title, author, pages, isRead) {
 
 function displayLibraryBooks() {
   library.getLibraryBooks().forEach((book) => {
-    appendBookRowToBooksTable(book.title, book.author, book.pages, book.isRead);
+    appendBookRowToBooksTable(
+      book.getTitle(),
+      book.getAuthor(),
+      book.getPagesNumber(),
+      book.getReadStatus()
+    );
   });
 }
 
