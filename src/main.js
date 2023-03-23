@@ -80,120 +80,98 @@ library.addBook(
 );
 library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
 
-// DOM
-const addNewBookButton = document.querySelector('form button[type="submit"]');
-const deleteAllBooksButton = document.querySelector('main .summary button');
+const displayController = (() => {
+  function addBook(title, author, pages, isRead) {
+    const tableBody = document.querySelector('main .books-list tbody');
+    const tr = document.createElement('tr');
 
-// Functions
-function appendBookRowToBooksTable(title, author, pages, isRead) {
-  const tableBody = document.querySelector('main .books-list tbody');
-  const tr = document.createElement('tr');
+    const tdTitle = document.createElement('td');
+    const tdAuthor = document.createElement('td');
+    const tdPages = document.createElement('td');
+    const tdStatus = document.createElement('td');
+    const iStatusSymbol = document.createElement('i');
+    const tdRemove = document.createElement('td');
+    const iRemoveSymbol = document.createElement('i');
 
-  const tdTitle = document.createElement('td');
-  const tdAuthor = document.createElement('td');
-  const tdPages = document.createElement('td');
-  const tdStatus = document.createElement('td');
-  const iStatusSymbol = document.createElement('i');
-  const tdRemove = document.createElement('td');
-  const iRemoveSymbol = document.createElement('i');
+    tdTitle.innerText = title;
+    tdAuthor.innerText = author;
+    tdPages.innerText = pages;
 
-  tdTitle.innerText = title;
-  tdAuthor.innerText = author;
-  tdPages.innerText = pages;
+    tdStatus.appendChild(iStatusSymbol);
+    if (isRead) {
+      iStatusSymbol.classList.add('fa-solid', 'fa-check', 'book-read');
+    } else {
+      iStatusSymbol.classList.add('fa-solid', 'fa-xmark', 'book-not-read');
+    }
 
-  tdStatus.appendChild(iStatusSymbol);
-  if (isRead) {
-    iStatusSymbol.classList.add('fa-solid', 'fa-check', 'book-read');
-  } else {
-    iStatusSymbol.classList.add('fa-solid', 'fa-xmark', 'book-not-read');
+    tdRemove.appendChild(iRemoveSymbol);
+    iRemoveSymbol.classList.add('fa-solid', 'fa-trash-can');
+
+    tr.append(tdTitle, tdAuthor, tdPages, tdStatus, tdRemove);
+    tableBody.appendChild(tr);
   }
 
-  tdRemove.appendChild(iRemoveSymbol);
-  iRemoveSymbol.classList.add('fa-solid', 'fa-trash-can');
+  function displayLibraryBooks() {
+    library.getLibraryBooks().forEach((book) => {
+      addBook(
+        book.getTitle(),
+        book.getAuthor(),
+        book.getPagesNumber(),
+        book.getReadStatus()
+      );
+    });
+  }
 
-  tr.append(tdTitle, tdAuthor, tdPages, tdStatus, tdRemove);
-  tableBody.appendChild(tr);
-}
-
-function displayLibraryBooks() {
-  library.getLibraryBooks().forEach((book) => {
-    appendBookRowToBooksTable(
-      book.getTitle(),
-      book.getAuthor(),
-      book.getPagesNumber(),
-      book.getReadStatus()
+  function updateLibrarySummary() {
+    const totalBooksNumberDiv = document.querySelector(
+      '.summary-item:nth-of-type(1) div:last-child'
     );
-  });
-}
+    const readBooksNumberDiv = document.querySelector(
+      '.summary-item:nth-of-type(2) div:last-child'
+    );
+    const unreadBooksNumberDiv = document.querySelector(
+      '.summary-item:nth-of-type(3) div:last-child'
+    );
 
-function updateLibrarySummary() {
-  const totalBooksNumberDiv = document.querySelector(
-    '.summary-item:nth-of-type(1) div:last-child'
-  );
-  const readBooksNumberDiv = document.querySelector(
-    '.summary-item:nth-of-type(2) div:last-child'
-  );
-  const unreadBooksNumberDiv = document.querySelector(
-    '.summary-item:nth-of-type(3) div:last-child'
-  );
-
-  totalBooksNumberDiv.innerText = library.getBooksNumber();
-  readBooksNumberDiv.innerText = library.getReadBooksNumber();
-  unreadBooksNumberDiv.innerText =
-    library.getBooksNumber() - library.getReadBooksNumber();
-}
-
-function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
-  const errorTextSpan = document.querySelectorAll('form span.validation-error');
-
-  if (bookTitle === '') {
-    errorTextSpan[0].style.visibility = 'visible';
-  } else {
-    errorTextSpan[0].style.visibility = 'hidden';
+    totalBooksNumberDiv.innerText = library.getBooksNumber();
+    readBooksNumberDiv.innerText = library.getReadBooksNumber();
+    unreadBooksNumberDiv.innerText =
+      library.getBooksNumber() - library.getReadBooksNumber();
   }
 
-  if (bookAuthor === '') {
-    errorTextSpan[1].style.visibility = 'visible';
-  } else {
-    errorTextSpan[1].style.visibility = 'hidden';
+  function loadLibraryData() {
+    displayLibraryBooks();
+    updateLibrarySummary();
   }
 
-  if (bookPages === '') {
-    errorTextSpan[2].style.visibility = 'visible';
-  } else if (bookPages < 1 || bookPages > 10000) {
-    errorTextSpan[2].innerText = 'Enter a number between 1 and 10000.';
-    errorTextSpan[2].style.visibility = 'visible';
-  } else {
-    errorTextSpan[2].style.visibility = 'hidden';
+  function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
+    const errorTextSpan = document.querySelectorAll(
+      'form span.validation-error'
+    );
+
+    if (bookTitle === '') {
+      errorTextSpan[0].style.visibility = 'visible';
+    } else {
+      errorTextSpan[0].style.visibility = 'hidden';
+    }
+
+    if (bookAuthor === '') {
+      errorTextSpan[1].style.visibility = 'visible';
+    } else {
+      errorTextSpan[1].style.visibility = 'hidden';
+    }
+
+    if (bookPages === '') {
+      errorTextSpan[2].style.visibility = 'visible';
+    } else if (bookPages < 1 || bookPages > 10000) {
+      errorTextSpan[2].innerText = 'Enter a number between 1 and 10000.';
+      errorTextSpan[2].style.visibility = 'visible';
+    } else {
+      errorTextSpan[2].style.visibility = 'hidden';
+    }
   }
-}
 
-function deleteAllBooks() {
-  const allBooks = document.querySelectorAll('main .books-list tbody tr');
-
-  library.removeAll();
-
-  [...allBooks].forEach((book) => book.remove());
-
-  updateLibrarySummary();
-}
-
-// Event Listeners
-window.addEventListener('load', () => {
-  displayLibraryBooks();
-  updateLibrarySummary();
-});
-
-addNewBookButton.addEventListener('click', (e) => {
-  e.preventDefault();
-
-  const form = document.querySelector('form');
-  const bookTitle = document.querySelector('form input#title').value;
-  const bookAuthor = document.querySelector('form input#author').value;
-  const bookPages = document.querySelector('form input#pages').value;
-  const bookIsRead = document.querySelector('form input#read').checked;
-
-  const isValidForm = function isValidForm() {
+  function isValidForm(bookTitle, bookAuthor, bookPages) {
     return (
       bookTitle !== '' &&
       bookAuthor !== '' &&
@@ -201,45 +179,101 @@ addNewBookButton.addEventListener('click', (e) => {
       bookPages > 0 &&
       bookPages <= 10000
     );
-  };
+  }
 
-  toggleValidationMessages(bookTitle, bookAuthor, bookPages);
+  function deleteAllBooks() {
+    const allBooks = document.querySelectorAll('main .books-list tbody tr');
 
-  if (isValidForm()) {
-    library.addBook(bookTitle, bookAuthor, parseInt(bookPages, 10), bookIsRead);
-    appendBookRowToBooksTable(
-      bookTitle,
-      bookAuthor,
-      parseInt(bookPages, 10),
-      bookIsRead
-    );
-    form.reset();
+    library.removeAll();
+
+    [...allBooks].forEach((book) => book.remove());
+
     updateLibrarySummary();
   }
-});
 
-deleteAllBooksButton.addEventListener('click', deleteAllBooks);
+  function removeBook(target) {
+    target.parentNode.parentNode.remove();
+    updateLibrarySummary();
+  }
 
-document.addEventListener('click', (e) => {
+  function unreadBook(target) {
+    target.classList.remove('fa-check', 'book-read');
+    target.classList.add('fa-xmark', 'book-not-read');
+    updateLibrarySummary();
+  }
+
+  function readBook(target) {
+    target.classList.remove('fa-xmark', 'book-not-read');
+    target.classList.add('fa-check', 'book-read');
+    updateLibrarySummary();
+  }
+
+  return {
+    loadLibraryData,
+    updateLibrarySummary,
+    toggleValidationMessages,
+    isValidForm,
+    addBook,
+    deleteAllBooks,
+    removeBook,
+    unreadBook,
+    readBook,
+  };
+})();
+
+function listenButtonsClicks(e) {
   const { target } = e;
   const bookIndex = target.parentNode.parentNode.rowIndex - 1;
 
   if (target.classList.contains('fa-trash-can')) {
     library.removeBook(bookIndex);
 
-    target.parentNode.parentNode.remove();
-    updateLibrarySummary();
+    displayController.removeBook(target);
   } else if (target.classList.contains('fa-check')) {
     library.unreadBook(bookIndex);
 
-    target.classList.remove('fa-check', 'book-read');
-    target.classList.add('fa-xmark', 'book-not-read');
-    updateLibrarySummary();
+    displayController.unreadBook(target);
   } else if (target.classList.contains('fa-xmark')) {
     library.readBook(bookIndex);
 
-    target.classList.remove('fa-xmark', 'book-not-read');
-    target.classList.add('fa-check', 'book-read');
-    updateLibrarySummary();
+    displayController.readBook(target);
+  } else if (target.getAttribute('id') === 'add-book-btn') {
+    e.preventDefault();
+
+    const form = document.querySelector('form');
+    const bookTitle = document.querySelector('form input#title').value;
+    const bookAuthor = document.querySelector('form input#author').value;
+    const bookPages = document.querySelector('form input#pages').value;
+    const bookIsRead = document.querySelector('form input#read').checked;
+
+    const { toggleValidationMessages, isValidForm } = displayController;
+
+    toggleValidationMessages(bookTitle, bookAuthor, bookPages);
+
+    if (isValidForm(bookTitle, bookAuthor, bookPages)) {
+      library.addBook(
+        bookTitle,
+        bookAuthor,
+        parseInt(bookPages, 10),
+        bookIsRead
+      );
+
+      displayController.addBook(
+        bookTitle,
+        bookAuthor,
+        parseInt(bookPages, 10),
+        bookIsRead
+      );
+
+      form.reset();
+      displayController.updateLibrarySummary();
+    }
+  } else if (target.getAttribute('id') === 'delete-all-btn') {
+    displayController.deleteAllBooks();
   }
-});
+}
+
+// Event Listeners
+window.addEventListener('load', displayController.loadLibraryData);
+
+document.addEventListener('click', listenButtonsClicks);
