@@ -80,9 +80,24 @@ library.addBook(
 );
 library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
 
-const displayController = (() => {
+// Display Controller
+(() => {
+  // Cache DOM
+  const form = document.querySelector('form');
+  const tableBody = document.querySelector('main .books-list tbody');
+  const allBooks = document.querySelectorAll('main .books-list tbody tr');
+  const errorTextSpan = document.querySelectorAll('form span.validation-error');
+  const totalBooksNumberDiv = document.querySelector(
+    '.summary-item:nth-of-type(1) div:last-child'
+  );
+  const readBooksNumberDiv = document.querySelector(
+    '.summary-item:nth-of-type(2) div:last-child'
+  );
+  const unreadBooksNumberDiv = document.querySelector(
+    '.summary-item:nth-of-type(3) div:last-child'
+  );
+
   function addBook(title, author, pages, isRead) {
-    const tableBody = document.querySelector('main .books-list tbody');
     const tr = document.createElement('tr');
 
     const tdTitle = document.createElement('td');
@@ -123,16 +138,6 @@ const displayController = (() => {
   }
 
   function updateLibrarySummary() {
-    const totalBooksNumberDiv = document.querySelector(
-      '.summary-item:nth-of-type(1) div:last-child'
-    );
-    const readBooksNumberDiv = document.querySelector(
-      '.summary-item:nth-of-type(2) div:last-child'
-    );
-    const unreadBooksNumberDiv = document.querySelector(
-      '.summary-item:nth-of-type(3) div:last-child'
-    );
-
     totalBooksNumberDiv.innerText = library.getBooksNumber();
     readBooksNumberDiv.innerText = library.getReadBooksNumber();
     unreadBooksNumberDiv.innerText =
@@ -145,10 +150,6 @@ const displayController = (() => {
   }
 
   function toggleValidationMessages(bookTitle, bookAuthor, bookPages) {
-    const errorTextSpan = document.querySelectorAll(
-      'form span.validation-error'
-    );
-
     if (bookTitle === '') {
       errorTextSpan[0].style.visibility = 'visible';
     } else {
@@ -182,8 +183,6 @@ const displayController = (() => {
   }
 
   function deleteAllBooks() {
-    const allBooks = document.querySelectorAll('main .books-list tbody tr');
-
     library.removeAll();
 
     [...allBooks].forEach((book) => book.remove());
@@ -208,72 +207,51 @@ const displayController = (() => {
     updateLibrarySummary();
   }
 
-  return {
-    loadLibraryData,
-    updateLibrarySummary,
-    toggleValidationMessages,
-    isValidForm,
-    addBook,
-    deleteAllBooks,
-    removeBook,
-    unreadBook,
-    readBook,
-  };
-})();
+  function listenButtonsClicks(e) {
+    const { target } = e;
+    const bookIndex = target.parentNode.parentNode.rowIndex - 1;
 
-function listenButtonsClicks(e) {
-  const { target } = e;
-  const bookIndex = target.parentNode.parentNode.rowIndex - 1;
+    if (target.classList.contains('fa-trash-can')) {
+      library.removeBook(bookIndex);
 
-  if (target.classList.contains('fa-trash-can')) {
-    library.removeBook(bookIndex);
+      removeBook(target);
+    } else if (target.classList.contains('fa-check')) {
+      library.unreadBook(bookIndex);
 
-    displayController.removeBook(target);
-  } else if (target.classList.contains('fa-check')) {
-    library.unreadBook(bookIndex);
+      unreadBook(target);
+    } else if (target.classList.contains('fa-xmark')) {
+      library.readBook(bookIndex);
 
-    displayController.unreadBook(target);
-  } else if (target.classList.contains('fa-xmark')) {
-    library.readBook(bookIndex);
+      readBook(target);
+    } else if (target.getAttribute('id') === 'add-book-btn') {
+      e.preventDefault();
 
-    displayController.readBook(target);
-  } else if (target.getAttribute('id') === 'add-book-btn') {
-    e.preventDefault();
+      const bookTitle = document.querySelector('form input#title').value;
+      const bookAuthor = document.querySelector('form input#author').value;
+      const bookPages = document.querySelector('form input#pages').value;
+      const bookIsRead = document.querySelector('form input#read').checked;
 
-    const form = document.querySelector('form');
-    const bookTitle = document.querySelector('form input#title').value;
-    const bookAuthor = document.querySelector('form input#author').value;
-    const bookPages = document.querySelector('form input#pages').value;
-    const bookIsRead = document.querySelector('form input#read').checked;
+      toggleValidationMessages(bookTitle, bookAuthor, bookPages);
 
-    const { toggleValidationMessages, isValidForm } = displayController;
+      if (isValidForm(bookTitle, bookAuthor, bookPages)) {
+        library.addBook(
+          bookTitle,
+          bookAuthor,
+          parseInt(bookPages, 10),
+          bookIsRead
+        );
 
-    toggleValidationMessages(bookTitle, bookAuthor, bookPages);
+        addBook(bookTitle, bookAuthor, parseInt(bookPages, 10), bookIsRead);
 
-    if (isValidForm(bookTitle, bookAuthor, bookPages)) {
-      library.addBook(
-        bookTitle,
-        bookAuthor,
-        parseInt(bookPages, 10),
-        bookIsRead
-      );
-
-      displayController.addBook(
-        bookTitle,
-        bookAuthor,
-        parseInt(bookPages, 10),
-        bookIsRead
-      );
-
-      form.reset();
-      displayController.updateLibrarySummary();
+        form.reset();
+        updateLibrarySummary();
+      }
+    } else if (target.getAttribute('id') === 'delete-all-btn') {
+      deleteAllBooks();
     }
-  } else if (target.getAttribute('id') === 'delete-all-btn') {
-    displayController.deleteAllBooks();
   }
-}
 
-// Event Listeners
-window.addEventListener('load', displayController.loadLibraryData);
-
-document.addEventListener('click', listenButtonsClicks);
+  // Bind events
+  window.addEventListener('load', loadLibraryData);
+  document.addEventListener('click', listenButtonsClicks);
+})();
