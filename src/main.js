@@ -1,3 +1,37 @@
+const pubsub = (() => {
+  const events = {};
+
+  const publish = (eventName, data) => {
+    if (events[eventName]) {
+      events[eventName].forEach((fn) => {
+        fn(data);
+      });
+    }
+  };
+
+  const subscribe = (eventName, fn) => {
+    events[eventName] = events[eventName] ?? [];
+    events[eventName].push(fn);
+  };
+
+  const unSubscribe = (eventName, fn) => {
+    if (events[eventName]) {
+      for (let i = 0; i < events[eventName].length; i++) {
+        if (events[eventName][i] === fn) {
+          events[eventName].splice(i, 1);
+          break;
+        }
+      }
+    }
+  };
+
+  return {
+    publish,
+    subscribe,
+    unSubscribe,
+  };
+})();
+
 function Book(title, author, pages, status) {
   const bookTitle = title;
   const bookAuthor = author;
@@ -19,7 +53,9 @@ const library = (() => {
   const libraryBooks = [];
   let readBooksNumber = 0;
 
-  const addBook = function addBook(title, author, pages, isRead) {
+  const addBook = function addBook(book) {
+    const { title, author, pages, isRead } = book;
+
     libraryBooks.push(Book(title, author, pages, isRead));
     if (isRead) {
       readBooksNumber += 1;
@@ -60,32 +96,39 @@ const library = (() => {
     return readBooksNumber;
   };
 
+  // Bind events
+  pubsub.subscribe('addBook', addBook);
+  pubsub.subscribe('removeBook', removeBook);
+  pubsub.subscribe('deleteAllBooks', removeAll);
+  pubsub.subscribe('readBook', readBook);
+  pubsub.subscribe('unreadBook', unreadBook);
+
   return {
     getLibraryBooks,
     getBooksNumber,
     getReadBooksNumber,
-    readBook,
-    unreadBook,
     addBook,
-    removeAll,
-    removeBook,
   };
 })();
 
-library.addBook(
-  'Computer Systems: A programmer perspective',
-  'Randal Bryant',
-  1500,
-  true
-);
-library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
+library.addBook({
+  title: 'Computer Systems: A programmer perspective',
+  author: 'Randal Bryant',
+  pages: 1500,
+  isRead: true,
+});
+library.addBook({
+  title: 'The Prince',
+  author: 'Niccolo Machiavelli',
+  pages: 250,
+  isRead: false,
+});
 
 // Display Controller
 (() => {
   // Cache DOM
   const form = document.querySelector('form');
   const tableBody = document.querySelector('main .books-list tbody');
-  const allBooks = document.querySelectorAll('main .books-list tbody tr');
   const errorTextSpan = document.querySelectorAll('form span.validation-error');
   const totalBooksNumberDiv = document.querySelector(
     '.summary-item:nth-of-type(1) div:last-child'
@@ -97,7 +140,7 @@ library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
     '.summary-item:nth-of-type(3) div:last-child'
   );
 
-  function addBook(title, author, pages, isRead) {
+  function appendBookToTable(title, author, pages, isRead) {
     const tr = document.createElement('tr');
 
     const tdTitle = document.createElement('td');
@@ -128,7 +171,7 @@ library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
 
   function displayLibraryBooks() {
     library.getLibraryBooks().forEach((book) => {
-      addBook(
+      appendBookToTable(
         book.getTitle(),
         book.getAuthor(),
         book.getPagesNumber(),
@@ -183,28 +226,22 @@ library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
   }
 
   function deleteAllBooks() {
-    library.removeAll();
-
+    const allBooks = document.querySelectorAll('main .books-list tbody tr');
     [...allBooks].forEach((book) => book.remove());
-
-    updateLibrarySummary();
   }
 
   function removeBook(target) {
     target.parentNode.parentNode.remove();
-    updateLibrarySummary();
   }
 
   function unreadBook(target) {
     target.classList.remove('fa-check', 'book-read');
     target.classList.add('fa-xmark', 'book-not-read');
-    updateLibrarySummary();
   }
 
   function readBook(target) {
     target.classList.remove('fa-xmark', 'book-not-read');
     target.classList.add('fa-check', 'book-read');
-    updateLibrarySummary();
   }
 
   function listenButtonsClicks(e) {
@@ -212,17 +249,20 @@ library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
     const bookIndex = target.parentNode.parentNode.rowIndex - 1;
 
     if (target.classList.contains('fa-trash-can')) {
-      library.removeBook(bookIndex);
-
       removeBook(target);
+      pubsub.publish('removeBook', bookIndex);
+
+      updateLibrarySummary();
     } else if (target.classList.contains('fa-check')) {
-      library.unreadBook(bookIndex);
-
       unreadBook(target);
-    } else if (target.classList.contains('fa-xmark')) {
-      library.readBook(bookIndex);
+      pubsub.publish('unreadBook', bookIndex);
 
+      updateLibrarySummary();
+    } else if (target.classList.contains('fa-xmark')) {
       readBook(target);
+      pubsub.publish('readBook', bookIndex);
+
+      updateLibrarySummary();
     } else if (target.getAttribute('id') === 'add-book-btn') {
       e.preventDefault();
 
@@ -234,20 +274,27 @@ library.addBook('The Prince', 'Niccolo Machiavelli', 250, false);
       toggleValidationMessages(bookTitle, bookAuthor, bookPages);
 
       if (isValidForm(bookTitle, bookAuthor, bookPages)) {
-        library.addBook(
+        appendBookToTable(
           bookTitle,
           bookAuthor,
           parseInt(bookPages, 10),
           bookIsRead
         );
-
-        addBook(bookTitle, bookAuthor, parseInt(bookPages, 10), bookIsRead);
+        pubsub.publish('addBook', {
+          title: bookTitle,
+          author: bookAuthor,
+          pages: parseInt(bookPages, 10),
+          isRead: bookIsRead,
+        });
 
         form.reset();
         updateLibrarySummary();
       }
     } else if (target.getAttribute('id') === 'delete-all-btn') {
+      pubsub.publish('deleteAllBooks');
       deleteAllBooks();
+
+      updateLibrarySummary();
     }
   }
 
