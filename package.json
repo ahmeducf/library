@@ -33,11 +33,11 @@
     "*.js": [
       "npx eslint",
       "npx prettier --write",
-      "gitmoji -i"
+      "gitmoji-cli -i"
     ],
     "*.{html,css,md}": [
       "prettier --write",
-      "gitmoji -i"
+      "gitmoji-cli -i"
     ]
   }
 }
