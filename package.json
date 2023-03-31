@@ -32,12 +32,10 @@
   "lint-staged": {
     "*.js": [
       "npx eslint",
-      "npx prettier --write",
-      "gitmoji-cli -i"
+      "npx prettier --write"
     ],
-    "*.{html,css,md}": [
-      "prettier --write",
-      "gitmoji-cli -i"
+    "*.{html,css,md,json}": [
+      "npx prettier --write"
     ]
   }
 }
