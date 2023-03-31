@@ -24,6 +24,7 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-import": "^2.27.5",
+    "gitmoji-cli": "^8.0.0",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
     "prettier": "2.8.4"
@@ -31,8 +32,12 @@
   "lint-staged": {
     "*.js": [
       "npx eslint",
-      "npx prettier --write"
+      "npx prettier --write",
+      "gitmoji -i"
     ],
-    "*.{html,css,md}": "prettier --write"
+    "*.{html,css,md}": [
+      "prettier --write",
+      "gitmoji -i"
+    ]
   }
 }
